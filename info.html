@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evvy.nail - 服務與須知</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* 黑茶色系調色盤 */
+            --bg-deep: #191210;      /* 極深黑茶背景 */
+            --bg-card: rgba(43, 33, 30, 0.85); /* 卡片顏色加深一點，襯托宋體 */
+            --text-main: #F0EBE5;    /* 燕麥米白 */
+            --text-sub: #ACA5A2;     /* 暖灰 */
+            --accent-gold: #D4C5B0;  /* 點綴香檳金 */
+            
+            /* 酸性銀色金屬漸層 */
+            --silver-fluid: linear-gradient(135deg, #E8E8E8 0%, #909090 50%, #E8E8E8 100%);
+            --silver-text: linear-gradient(to right, #fff, #bbb);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            /* 更改為思源宋體 */
+            font-family: "Noto Serif TC", "Songti TC", serif;
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+            background-image: radial-gradient(circle at top right, #382824 0%, #191210 60%);
+        }
+
+        /* 背景流體裝飾 (酸性風格) */
+        .acid-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .fluid-shape {
+            position: absolute;
+            background: linear-gradient(45deg, #666, #fff, #333);
+            filter: blur(60px);
+            opacity: 0.15;
+            border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+            animation: float 10s infinite ease-in-out;
+        }
+
+        .shape-1 { top: -10%; left: -10%; width: 300px; height: 300px; animation-delay: 0s; }
+        .shape-2 { bottom: 10%; right: -5%; width: 250px; height: 350px; animation-delay: -5s; background: linear-gradient(to top, #888, #ccc); }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
+            50% { transform: translateY(-20px) rotate(5deg); border-radius: 60% 40% 30% 70% / 50% 30% 70% 50%; }
+        }
+
+        /* 卡片主體 */
+        .card-container {
+            width: 100%;
+            max-width: 420px;
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+            position: relative;
+        }
+
+        /* 銀色金屬邊框 */
+        .card-container::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 20px;
+            padding: 1px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.4), transparent 60%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        /* ********************************* */
+        /* 新增：店名標題樣式 */
+        /* ********************************* */
+        .shop-header {
+            padding: 30px 25px 15px; /* 上方空間大，讓標題更突出 */
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .shop-header h1 {
+            font-family: "Noto Serif TC", serif;
+            font-size: 32px; /* 標題字體大小 */
+            font-weight: 700;
+            letter-spacing: 6px; /* 拉開字距，增加高級感 */
+            background: var(--silver-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+            text-shadow: 0 0 5px rgba(255,255,255,0.2); /* 讓銀色有微光澤 */
+            padding-bottom: 5px;
+        }
+        /* ********************************* */
+        /* ********************************* */
+
+        /* 頂部導航 Tabs */
+        .tabs-header {
+            display: flex;
+            padding: 18px 10px;
+            background: rgba(0,0,0,0.2);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        .tabs-header::-webkit-scrollbar { display: none; }
+
+        .tab-btn {
+            flex: 0 0 auto;
+            padding: 6px 16px;
+            margin: 0 4px;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: var(--text-sub);
+            border-radius: 4px;
+            font-size: 14px;
+            font-family: "Noto Serif TC", serif;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 1px;
+        }
+
+        .tab-btn.active {
+            color: #1a1210;
+            border-color: transparent;
+            font-weight: 700;
+            background: var(--silver-fluid);
+            background-size: 200% 200%;
+            box-shadow: 0 0 15px rgba(255,255,255,0.15);
+        }
+
+        /* 內容區域 */
+        .content-body {
+            padding: 25px;
+            min-height: 480px;
+            position: relative;
+        }
+
+        .tab-content {
+            display: none;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        
+        .tab-content.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 分頁內標題樣式 */
+        h2 {
+            font-family: "Noto Serif TC", serif;
+            font-size: 22px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            margin-bottom: 25px;
+            text-align: center;
+            background: var(--silver-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            text-transform: uppercase;
+        }
+
+        h3 {
+            font-size: 16px;
+            color: var(--accent-gold);
+            margin: 25px 0 12px 0;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            display: flex;
+            align-items: center;
+        }
+        
+        h3::before {
+            content: '✦';
+            font-size: 10px;
+            margin-right: 8px;
+            color: var(--text-sub);
+        }
+
+        /* 價目表排版 */
+        .price-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 14px;
+            font-size: 15px;
+            border-bottom: 1px dotted rgba(255,255,255,0.1);
+            padding-bottom: 5px;
+        }
+        .price-item:last-child { border-bottom: none; }
+        
+        .item-name { color: var(--text-main); font-weight: 400; }
+        .item-desc { display: block; font-size: 12px; color: var(--text-sub); margin-top: 4px; font-style: italic;}
+        .item-price { 
+            color: #fff; 
+            font-family: 'Courier New', monospace;
+            font-weight: bold; 
+            margin-left: 10px;
+            white-space: nowrap;
+        }
+
+        /* 盲盒專區 */
+        .blind-box-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.03), transparent);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 18px;
+            margin-bottom: 18px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+        
+        .blind-box-card::after {
+            content: '';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle, rgba(255,255,255,0.15), transparent 70%);
+            border-radius: 50%;
+            filter: blur(10px);
+        }
+        
+        .bb-title { font-size: 17px; color: #fff; margin-bottom: 6px; font-weight: 600; letter-spacing: 1px;}
+        .bb-tag { 
+            font-size: 11px; 
+            padding: 2px 8px; 
+            border: 1px solid var(--text-sub); 
+            border-radius: 2px;
+            color: var(--text-sub); 
+            margin-right: 5px;
+            font-family: sans-serif;
+        }
+        .bb-desc { font-size: 13px; color: var(--text-sub); margin: 10px 0; line-height: 1.8;}
+
+        /* 文字段落與列表 */
+        p { 
+            font-size: 14px; 
+            line-height: 1.9;
+            color: var(--text-main); 
+            margin-bottom: 18px; 
+            text-align: justify;
+        }
+        
+        .notice-box {
+            background: rgba(0,0,0,0.25);
+            padding: 16px;
+            border-radius: 4px;
+            font-size: 13px;
+            line-height: 2;
+            color: var(--text-sub);
+            border-left: 2px solid var(--accent-gold);
+        }
+        
+        .highlight { color: #fff; border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 1px;}
+        .warning { color: #e6cba8; font-weight: 600;}
+
+        /* 底部 */
+        .footer {
+            text-align: center;
+            padding: 15px;
+            font-size: 11px;
+            color: var(--text-sub);
+            opacity: 0.5;
+            letter-spacing: 3px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            font-family: sans-serif;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="acid-bg">
+        <div class="fluid-shape shape-1"></div>
+        <div class="fluid-shape shape-2"></div>
+    </div>
+
+    <div class="card-container">
+        
+        <div class="shop-header">
+            <h1>Evvy.nail</h1>
+        </div>
+
+        <div class="tabs-header">
+            <button class="tab-btn active" onclick="switchTab('price')">價目表</button>
+            <button class="tab-btn" onclick="switchTab('blind')">盲盒價目</button>
+            <button class="tab-btn" onclick="switchTab('booking')">預約須知</button>
+            <button class="tab-btn" onclick="switchTab('care')">術後照護</button>
+        </div>
+
+        <div class="content-body">
+
+            <div id="price" class="tab-content active">
+                <h2>Price List</h2>
+                
+                <h3>基礎項目</h3>
+                <div class="price-item">
+                    <span class="item-name">單色美甲 / 貓眼 / 璀璨</span>
+                    <span class="item-price">$750</span>
+                </div>
+                <div class="price-item">
+                    <span class="item-name">跳色美甲 (可跳2色)</span>
+                    <span class="item-price">$850</span>
+                </div>
+                <div class="price-item">
+                    <span class="item-name">法式 / 漸變</span>
+                    <span class="item-price">$950</span>
+                </div>
+                <div class="price-item">
+                    <div>
+                        <span class="item-name">造型設計款</span>
+                        <span class="item-desc">手繪 / 立體 / 鏡面 / 水彩 / 貼鑽</span>
+                    </div>
+                    <span class="item-price">$1200+</span>
+                </div>
+
+                <h3>護理與卸甲</h3>
+                <div class="price-item">
+                    <div>
+                        <span class="item-name">手部保養</span>
+                        <span class="item-desc">含銼型前置處理 + 手部按摩</span>
+                    </div>
+                    <span class="item-price">$400</span>
+                </div>
+                <div class="price-item">
+                    <span class="item-name">本店作品卸甲</span>
+                    <span class="item-price">$200</span>
+                </div>
+                <div class="price-item">
+                    <span class="item-name">他店卸甲 / 卸甲不續作</span>
+                    <span class="item-price">$350</span>
+                </div>
+
+                <h3>延甲服務</h3>
+                <div class="price-item"><span class="item-name">甲片延長</span><span class="item-price">$60/指</span></div>
+                <div class="price-item"><span class="item-name">凝膠延長</span><span class="item-price">$80/指</span></div>
+                <div class="price-item"><span class="item-name">甲片全延</span><span class="item-price">$550</span></div>
+                <div class="price-item"><span class="item-name">凝膠全延</span><span class="item-price">$750</span></div>
+                <p style="font-size:12px; margin-top:15px; color:var(--text-sub); border-top:1px solid rgba(255,255,255,0.1); padding-top:10px;">
+                    * 凝膠延甲需本甲長度 > 3mm，過度延長可能造成斷甲。
+                </p>
+            </div>
+
+            <div id="blind" class="tab-content">
+                <h2>Mystery Box</h2>
+                <p style="text-align: center; color:var(--text-main); margin-bottom: 25px; font-style: italic;">
+                    “ 可提前許願色系、風格、元素。<br>每次設計皆不重複，充滿驚喜。”
+                </p>
+
+                <div class="blind-box-card">
+                    <div class="bb-title">基礎盲盒 <span class="item-price" style="float:right; font-size:16px;">$900</span></div>
+                    <span class="bb-tag">複雜度 40%</span>
+                    <div class="bb-desc">幾指貓眼或單色，搭配簡約造型，適合喜歡低調質感的你。</div>
+                </div>
+
+                <div class="blind-box-card">
+                    <div class="bb-title">進階盲盒 <span class="item-price" style="float:right; font-size:16px;">$1300</span></div>
+                    <span class="bb-tag">複雜度 60%</span> <span class="bb-tag">含鑽飾</span>
+                    <div class="bb-desc">常見小紅書、日韓風格首選款式！隨機附贈鑽飾晶石。</div>
+                </div>
+
+                <div class="blind-box-card">
+                    <div class="bb-title">高級盲盒 <span class="item-price" style="float:right; font-size:16px;">$1600</span></div>
+                    <span class="bb-tag">複雜度 100%</span> <span class="bb-tag">含晶石</span>
+                    <div class="bb-desc">適合 Cosplay、痛甲、應援甲、舞台妝造。華麗度滿分。</div>
+                </div>
+
+                <div class="notice-box" style="margin-top:20px;">
+                    特殊造型（雕花/流麻/花款/精緻手繪）可提前許願。<br>
+                    盲盒系列恕不另外打折。
+                </div>
+            </div>
+
+            <div id="booking" class="tab-content">
+                <h2>Booking Info</h2>
+                
+                <div class="notice-box" style="text-align:center; margin-bottom:20px; border-left:none; border:1px solid rgba(255,255,255,0.1);">
+                    LINE 預約<br>
+                    <span class="highlight" style="font-size:18px; font-weight:bold; letter-spacing:1px;">@392xahjm</span><br>
+                    <span style="font-size:11px;">或私訊小盒子</span>
+                </div>
+
+                <h3>預約規範</h3>
+                <p>
+                    <strong>▪ 完全預約制</strong><br>
+                    個人工作室，為維護品質請準時抵達。<br>
+                    <strong>▪ 攜伴限制</strong><br>
+                    可攜伴（限一名），空間有限請見諒。<br>
+                    <strong>▪ 夜間加成</strong><br>
+                    19:00 後預約，加收 <span class="item-price">$200</span> 夜間服務費。<br>
+                    <strong>▪ 取消政策</strong><br>
+                    如需取消或改期，請務必提前通知。
+                </p>
+
+                <h3>施作時間參考</h3>
+                <ul style="list-style:none; font-size:14px; color:var(--text-sub); line-height:2.2; margin-left:5px;">
+                    <li>• 單色：約 2 小時</li>
+                    <li>• 造型：約 3 小時</li>
+                    <li>• 延甲：需額外多 1 - 2 小時</li>
+                </ul>
+                <p style="font-size:12px; margin-top:20px; opacity:0.7;">* 施作前會進行評估及建議，如遇工作室公休會提前告知。</p>
+            </div>
+
+            <div id="care" class="tab-content">
+                <h2>Aftercare</h2>
+                
+                <h3>保固服務</h3>
+                <p>
+                    美甲若有非人為因素之斑駁、脫落等情況，<span class="highlight">5日內</span>皆可免費修補。<br>
+                    <span style="font-size:12px; color:#888;">( 超過 5 日，一指補甲費用 $50 )</span>
+                </p>
+
+                <h3>照護重點</h3>
+                <p>
+                    1. <span class="warning">不可徒手剝除</span><br>
+                    如需卸甲請預約卸甲服務，直接剝除凝膠會嚴重造成甲面分層與損傷。<br><br>
+                    2. <span class="warning">避開油水環境</span><br>
+                    長時間浸泡熱水、海水或接觸油類產品，可能會縮短凝膠壽命。<br><br>
+                    3. <span class="warning">指尖使用習慣</span><br>
+                    請改用指腹做事，避免用指尖摳東西（如開易開罐）。
+                </p>
+
+                <div class="blind-box-card" style="text-align: center; margin-top: 35px; border-color: var(--accent-gold); background: rgba(212, 197, 176, 0.05);">
+                    <div class="bb-title" style="color:var(--accent-gold);">♡ 老客回饋 ♡</div>
+                    <div class="bb-desc">
+                        將本店推薦親友來消費<br>
+                        您下次來店可享 <span style="font-size:18px; color:#fff; font-weight:bold; font-family:'Courier New';">8折</span> 優惠
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer">
+            Evvy.nail © 2024
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tabId) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>
